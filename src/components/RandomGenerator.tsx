@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+// import { useQuery } from "@tanstack/react-query";
+// import { Loader2 } from "lucide-react";
 import { CATEGORIES, CategoryType } from "../types/ghibli";
 
 export default function RandomGenerator() {
