@@ -1,15 +1,3 @@
-export interface Film {
-  id: string;
-  title: string;
-  original_title: string;
-  description: string;
-  director: string;
-  release_date: string;
-  running_time: string;
-  rt_score: string;
-  image: string;
-}
-
 export type CategoryType = "films" | "people" | "locations" | "vehicles";
 
 export const CATEGORIES = [
@@ -18,3 +6,17 @@ export const CATEGORIES = [
   { value: "locations" as const, label: "Location" },
   { value: "vehicles" as const, label: "Vehicle" },
 ] as const;
+
+export interface Film {
+  description: string;
+  id: string;
+  image: string;
+  release_date: string;
+  running_time: string;
+  title: string;
+}
+
+export interface idObject {
+  id: string;
+  title: string;
+}

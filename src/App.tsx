@@ -26,7 +26,7 @@ function App() {
         <div className="container mx-auto px-4">
           <header className="text-center mb-8">
             <h1 className="text-4xl font-bold text-indigo-600">
-              Ghibli Generator
+              Random Ghibli Generator
             </h1>
           </header>
           {/* Main component that handles random Ghibli content generation */}
