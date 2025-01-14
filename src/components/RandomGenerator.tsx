@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 // import { Loader2 } from "lucide-react";
-import { CATEGORIES, CategoryType, idObject } from "../types/ghibli";
+import { CATEGORIES, CategoryType, BaseGhibliItem } from "../types/ghibli";
+import RandomThing from "./RandomThing";
 
 export default function RandomGenerator() {
   const [category, setCategory] = useState<CategoryType>("films");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  // Then use useQuery instead of useEffect
   const {
     data: ids,
     isLoading,
@@ -20,7 +20,7 @@ export default function RandomGenerator() {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      return data.map((item: idObject) => item.id);
+      return data.map((item: BaseGhibliItem) => item.id);
     },
   });
 
@@ -47,14 +47,15 @@ export default function RandomGenerator() {
     enabled: !!selectedId, // only fetch when selectedId is truthy
   });
 
-  console.log(selectedItem);
-
   return (
     <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
       <div className="flex gap-4">
         <select
           value={category}
-          onChange={(e) => setCategory(e.target.value as CategoryType)}
+          onChange={(e) => {
+            setCategory(e.target.value as CategoryType);
+            setSelectedId(null);
+          }}
           className="block w-full p-2 border rounded-md"
         >
           {CATEGORIES.map((cat) => (
@@ -76,6 +77,13 @@ export default function RandomGenerator() {
         {isLoading && <p>Loading...</p>}
         {error && <p>Error: {error.message}</p>}
       </div>
+      {selectedItem && (
+        <RandomThing
+          selectedItem={selectedItem}
+          category={category}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 }
