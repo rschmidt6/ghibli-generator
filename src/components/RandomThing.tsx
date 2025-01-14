@@ -1,4 +1,8 @@
 import { Film, Person, Location, Vehicle, CategoryType } from "../types/ghibli";
+import FilmComponent from "./CategoryComponents/FilmComponent";
+import LocationsComponent from "./CategoryComponents/LocationsComponent";
+import PeopleComponent from "./CategoryComponents/PeopleComponent";
+import VehiclesComponent from "./CategoryComponents/VehiclesComponent";
 
 type GhibliItem = Film | Person | Location | Vehicle;
 
@@ -24,39 +28,19 @@ export default function RandomThing({
   switch (category) {
     case "films": {
       const film = selectedItem as Film;
-      return (
-        <div>
-          <h2>{film.title}</h2>
-          <p>{film.description}</p>
-        </div>
-      );
+      return <FilmComponent film={film} />;
     }
     case "people": {
       const person = selectedItem as Person;
-      return (
-        <div>
-          <h2>{person.name}</h2>
-          <p>{person.age}</p>
-        </div>
-      );
+      return <PeopleComponent person={person} />;
     }
     case "locations": {
       const location = selectedItem as Location;
-      return (
-        <div>
-          <h2>{location.name}</h2>
-          <p>{location.climate}</p>
-        </div>
-      );
+      return <LocationsComponent location={location} />;
     }
     case "vehicles": {
       const vehicle = selectedItem as Vehicle;
-      return (
-        <div>
-          <h2>{vehicle.name}</h2>
-          <p>{vehicle.description}</p>
-        </div>
-      );
+      return <VehiclesComponent vehicle={vehicle} />;
     }
   }
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-// import { Loader2 } from "lucide-react";
 import { CATEGORIES, CategoryType, BaseGhibliItem } from "../types/ghibli";
 import RandomThing from "./RandomThing";
 
