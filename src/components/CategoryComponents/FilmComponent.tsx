@@ -7,7 +7,7 @@ interface FilmComponentProps {
 export default function FilmComponent({ film }: FilmComponentProps) {
   return (
     // The outer container uses flex to arrange items side by side on larger screens
-    <div className="max-w-6xl mx-auto p-4 lg:p-8">
+    <div className="max-w-6xl mx-auto p-4 lg:p-8 font-body">
       {/* Main content container that switches between column and row layout */}
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Image container with responsive sizing */}
@@ -23,12 +23,12 @@ export default function FilmComponent({ film }: FilmComponentProps) {
         <div className="lg:w-2/3 space-y-4">
           {/* Title section */}
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{film.title}</h1>
-            <h2 className="text-xl text-gray-600">{film.original_title}</h2>
+            <h1 className="text-3xl text-gray-900">{film.title}</h1>
+            <h2 className="text-xl text-gray-700">{film.original_title}</h2>
           </div>
 
           {/* Movie details section */}
-          <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+          <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
             <div>
               <span className="font-semibold">Release Date:</span>{" "}
               {film.release_date}
@@ -43,7 +43,7 @@ export default function FilmComponent({ film }: FilmComponentProps) {
           </div>
 
           {/* Description section */}
-          <p className="text-gray-700 leading-relaxed">{film.description}</p>
+          <p className="text-gray-800 leading-relaxed">{film.description}</p>
         </div>
       </div>
     </div>
