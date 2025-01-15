@@ -47,34 +47,36 @@ export default function RandomGenerator() {
   });
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
-      <div className="flex gap-4">
-        <select
-          value={category}
-          onChange={(e) => {
-            setCategory(e.target.value as CategoryType);
-            setSelectedId(null);
-          }}
-          className="block w-full p-2 border rounded-md"
-        >
-          {CATEGORIES.map((cat) => (
-            <option key={cat.value} value={cat.value}>
-              Random {cat.label}
-            </option>
-          ))}
-        </select>
+    <>
+      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <div className="flex gap-4">
+          <select
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value as CategoryType);
+              setSelectedId(null);
+            }}
+            className="block w-full p-2 border rounded-md"
+          >
+            {CATEGORIES.map((cat) => (
+              <option key={cat.value} value={cat.value}>
+                Random {cat.label}
+              </option>
+            ))}
+          </select>
 
-        <button
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md 
+          <button
+            className="px-4 py-2 bg-indigo-600 text-white rounded-md 
                      hover:bg-indigo-700 transition-colors"
-          onClick={handleGenerate}
-        >
-          Generate
-        </button>
-      </div>
-      <div>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>Error: {error.message}</p>}
+            onClick={handleGenerate}
+          >
+            Generate
+          </button>
+        </div>
+        <div>
+          {isLoading && <p>Loading...</p>}
+          {error && <p>Error: {error.message}</p>}
+        </div>
       </div>
       {selectedItem && (
         <RandomThing
@@ -83,6 +85,6 @@ export default function RandomGenerator() {
           isLoading={isLoading}
         />
       )}
-    </div>
+    </>
   );
 }
