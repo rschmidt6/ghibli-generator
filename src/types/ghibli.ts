@@ -38,6 +38,7 @@ export interface Person extends BaseGhibliItem {
   eye_color: string;
   hair_color: string;
   species: string; // URL to species
+  films: string[]; // URLs to films
 }
 
 export interface Location extends BaseGhibliItem {
@@ -46,6 +47,7 @@ export interface Location extends BaseGhibliItem {
   terrain: string;
   surface_water: string; // Using string as it appears to be a string in the API
   residents: string[]; // URLs to residents
+  films: string[]; // URLs to films
 }
 
 export interface Vehicle extends BaseGhibliItem {
@@ -54,6 +56,7 @@ export interface Vehicle extends BaseGhibliItem {
   vehicle_class: string;
   length: string; // Using string as it appears to be a string in the API
   pilot: string; // URL to pilot
+  films: string[]; // URLs to films
 }
 
 // This helps TypeScript understand which type to use based on the category
