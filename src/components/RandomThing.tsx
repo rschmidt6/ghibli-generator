@@ -3,6 +3,8 @@ import FilmComponent from "./CategoryComponents/FilmComponent";
 import LocationsComponent from "./CategoryComponents/LocationsComponent";
 import PeopleComponent from "./CategoryComponents/PeopleComponent";
 import VehiclesComponent from "./CategoryComponents/VehiclesComponent";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 type GhibliItem = Film | Person | Location | Vehicle;
 
@@ -17,8 +19,32 @@ export default function RandomThing({
   category,
   isLoading,
 }: RandomThingProps) {
-  if (isLoading) {
-    return <div>Loading...</div>;
+  const [isLocalLoading, setIsLocalLoading] = useState(true);
+
+  // Reset local loading whenever selectedItem or category changes
+  useEffect(() => {
+    setIsLocalLoading(true);
+    const timer = setTimeout(() => {
+      setIsLocalLoading(false);
+    }, 650);
+    return () => clearTimeout(timer);
+  }, [selectedItem, category]); // Reset loading on content change
+
+  if (isLoading || isLocalLoading) {
+    return (
+      <motion.div
+        className="flex justify-center items-center h-96"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <img
+          src="/toto.png"
+          alt="Loading..."
+          className="w-16 h-16 animate-spin"
+        />
+      </motion.div>
+    );
   }
 
   if (!selectedItem) {

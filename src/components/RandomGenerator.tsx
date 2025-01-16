@@ -7,13 +7,15 @@ import { motion } from "framer-motion";
 export default function RandomGenerator() {
   const [category, setCategory] = useState<CategoryType>("films");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
+  // First query - getting the IDs
   const {
     data: ids,
-    isLoading,
+    isLoading: idsLoading,
     error,
   } = useQuery<string[]>({
-    queryKey: ["ids", category], // include category in the key so it refetches when category changes
+    queryKey: ["ids", category],
     queryFn: async () => {
       const response = await fetch(`https://ghibliapi.vercel.app/${category}`);
       if (!response.ok) {
@@ -24,18 +26,19 @@ export default function RandomGenerator() {
     },
   });
 
-  const getRandomId = (ids: string[]) => {
-    setSelectedId(ids[Math.floor(Math.random() * ids.length)]);
-  };
-
-  //handle generate random button click
-  const handleGenerate = () => {
-    getRandomId(ids || []);
-  };
-
-  const { data: selectedItem } = useQuery({
+  // Second query - getting the selected item
+  const {
+    data: selectedItem,
+    isLoading: itemLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["randomObject", category, selectedId],
     queryFn: async () => {
+      // Add an early return if selectedId is null
+      if (!selectedId) {
+        return null;
+      }
+
       const response = await fetch(
         `https://ghibliapi.vercel.app/${category}/${selectedId}`
       );
@@ -44,8 +47,43 @@ export default function RandomGenerator() {
       }
       return response.json();
     },
-    enabled: !!selectedId, // only fetch when selectedId is truthy
+    enabled: !!selectedId,
+    // Add these options to further prevent unwanted requests
+    retry: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
+
+  const getRandomId = (ids: string[]) => {
+    if (!ids.length) return;
+
+    let newId;
+    // Ensure we get a different ID if possible
+    do {
+      newId = ids[Math.floor(Math.random() * ids.length)];
+    } while (newId === selectedId && ids.length > 1);
+
+    setSelectedId(newId);
+  };
+
+  const handleGenerate = async () => {
+    if (isGenerating || !ids?.length) return;
+
+    setIsGenerating(true);
+    try {
+      const currentId = selectedId;
+      getRandomId(ids);
+
+      // If we happened to get the same ID, force a refetch
+      if (currentId === selectedId) {
+        await refetch();
+      }
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const isLoading = idsLoading || itemLoading || isGenerating;
 
   return (
     <>
@@ -56,7 +94,6 @@ export default function RandomGenerator() {
         transition={{ duration: 0.5 }}
       >
         <div className="flex flex-col sm:flex-row gap-4">
-          {/* Enhanced select element with custom styling */}
           <div className="relative flex-grow">
             <select
               value={category}
@@ -96,15 +133,9 @@ export default function RandomGenerator() {
                  transition-all duration-300 sm:w-auto w-full
                  flex items-center justify-center gap-2"
             onClick={handleGenerate}
+            disabled={isLoading}
           >
             <span>Generate</span>
-            {/* <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-8 h-8"
-            >
-              <img src="/toto.png" alt="refresh" />
-            </motion.div> */}
           </motion.button>
         </div>
 

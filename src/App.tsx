@@ -25,11 +25,11 @@ function App() {
       <div className="min-h-screen py-8 bg-[#00ADF0] font-body">
         <div className="container mx-auto px-4">
           <header className="mb-8 flex justify-center flex-col items-center">
-            <h1 className="text-[2.75rem] text-white leading-tight scale-y-90">
+            <h1 className="text-3xl sm:text-[2.75rem] text-white leading-tight scale-y-90">
               ランダムジブリ探検
             </h1>
-            <div className="border-t-2 border-white w-96"></div>
-            <h1 className="text-[1.70rem] text-white scale-y-105">
+            <div className="border-t-2 w-64 border-white sm:w-96"></div>
+            <h1 className="text-xl sm:text-[1.70rem] text-white scale-y-105 sm:pt-2">
               RANDOMLY EXPLORE GHIBLI
             </h1>
           </header>
@@ -49,6 +49,5 @@ function App() {
     </QueryClientProvider>
   );
 }
-//#5BC0F3
-// Export App as the default export so it can be imported and rendered by main.tsx
+
 export default App;
