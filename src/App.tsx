@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RandomGenerator from "./components/RandomGenerator";
+import Footer from "./components/Footer";
 
 // Create a new QueryClient instance with custom configuration
 // This client manages all the data fetching, caching, and state management for React Query
@@ -46,6 +47,7 @@ function App() {
           backgroundPosition: "bottom right",
         }}
       />
+      <Footer />
     </QueryClientProvider>
   );
 }
